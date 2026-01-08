@@ -1,0 +1,48 @@
+class Book:
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author
+        self.status = "Available"
+
+class Library:
+    def __init__(self):
+        self.books = []
+
+    def add(self, title, author):
+        self.books.append(Book(title, author))
+
+    def show(self):
+        for b in self.books:
+            print(f"{b.title} | {b.author} | {b.status}")
+
+    def borrow(self, title):
+        for b in self.books:
+            if b.title.lower() == title.lower() and b.status == "Available":
+                b.status = "Borrowed"
+                return True
+        return False
+
+    def hand_back(self, title):
+        for b in self.books:
+            if b.title.lower() == title.lower():
+                b.status = "Available"
+                return True
+        return False
+
+def main():
+    hub = Library()
+    while True:
+        cmd = input("\n1.View 2.Add 3.Borrow 4.Return 5.Exit: ")
+        if cmd == '1':
+            hub.show()
+        elif cmd == '2':
+            hub.add(input("Title: "), input("Author: "))
+        elif cmd == '3':
+            print("Done" if hub.borrow(input("Title: ")) else "Error")
+        elif cmd == '4':
+            print("Done" if hub.hand_back(input("Title: ")) else "Error")
+        elif cmd == '5':
+            break
+
+if __name__ == "__main__":
+    main()
